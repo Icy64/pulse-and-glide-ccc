@@ -1,0 +1,21 @@
+%%
+ClutchBStateConnectedState = False;
+
+CruiseControl(float userSetSpeedMPH) {
+//Match gear to speed given on Slide 10
+//Clutch state
+ClutchAConnectedState  = !ClutchBConnectedState 
+HighRange = userSetSpeedMPH + 2
+LowRange = userSetSpeedMPH - 2
+
+If CurrentSpeed = LowRange then:
+	Quickly accelerate to Highrange
+    Car.throttleValve = 0.7;
+Else:
+	Car.Clutch-state = "disconnected"
+    Car.throttleValve = 0;
+}
+
+Vehicle.ClutchBStateConnectedState = False;
+Vehicle.CurrentSpeed = 30mph
+Vehicle.CurrentSpeed = Vehicle.CruiseControl(CurrentSpeed);
